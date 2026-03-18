@@ -89,3 +89,6 @@ This pipeline using Medallion Architecture
 - Bronze Layer : Raw Data
 - Silver Layer : Clean Data
 - Gold Layer : Modeled
+
+## Output
+link dashboard : https://dbc-b329f9a7-d007.cloud.databricks.com/sql/dashboardsv3/01f1227c01a8163cb77e9a19ff1888b2?o=7474650187739270
