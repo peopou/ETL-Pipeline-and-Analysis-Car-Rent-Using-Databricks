@@ -1,0 +1,255 @@
+{
+  "datasets": [
+    {
+      "name": "86fd2587",
+      "displayName": "Top Customers Ranked by Rental Count and Spending",
+      "queryLines": [
+        "select\n",
+        "  customer_name,\n",
+        "  count(*) as total_rental,\n",
+        "  sum(total_amount) as total_spent\n",
+        "from gold.fact_rental f\n",
+        "join gold.dim_customer cs\n",
+        "  on f.customer_id = cs.customer_id\n",
+        "group by 1\n",
+        "order by 2 desc\n",
+        "limit 10\n"
+      ]
+    },
+    {
+      "name": "e5092517",
+      "displayName": "Top Customers by Rental Activity and Spending",
+      "queryLines": [
+        "select\n",
+        "  customer_name,\n",
+        "  count(*) as total_rental,\n",
+        "  sum(total_amount) as total_spent\n",
+        "from gold.fact_rental f\n",
+        "join gold.dim_customer cs\n",
+        "  on f.customer_id = cs.customer_id\n",
+        "group by 1\n",
+        "order by 2 desc\n",
+        "limit 10\n"
+      ]
+    },
+    {
+      "name": "b2e0255c",
+      "displayName": "Top Vehicle Usage and Rental Duration Summary",
+      "queryLines": [
+        "select\n",
+        "  v.vehicle_brand,\n",
+        "  v.vehicle_model,\n",
+        "  v.vehicle_type,\n",
+        "  count(*) as total_usage,\n",
+        "  sum(f.rental_duration_days) as total_days\n",
+        "from gold.fact_rental f\n",
+        "join gold.dim_vehicle v\n",
+        "  on f.vehicle_id = v.vehicle_id\n",
+        "group by 1,2,3\n",
+        "order by 4 desc\n",
+        "limit 10"
+      ]
+    },
+    {
+      "name": "436fa32c",
+      "displayName": "Location Transaction Summary Report",
+      "queryLines": [
+        "select\n",
+        "  l.location_name,\n",
+        "  l.location_city,\n",
+        "  count(*) as total_transaction\n",
+        "from gold.fact_rental f\n",
+        "join gold.dim_location l\n",
+        "  on f.pickup_location_key = l.location_id\n",
+        "group by 1,2\n",
+        "order by 3 desc"
+      ]
+    },
+    {
+      "name": "69f17ca1",
+      "displayName": "Untitled dataset",
+      "queryLines": [
+        "select\n",
+        "            d.month,\n",
+        "            sum(f.total_amount) as total_revenue\n",
+        "        from gold.fact_rental f\n",
+        "        join gold.dim_date d\n",
+        "            on f.rental_date = d.date\n",
+        "         group by 1\n",
+        "         order by 1"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "76f0d6bc",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "9ff3c56c",
+            "queries": [
+              {
+                "name": "e7831248158e44aaa7749092b4dde5de",
+                "query": {
+                  "datasetName": "86fd2587",
+                  "fields": [
+                    {
+                      "name": "customer_name",
+                      "expression": "`customer_name`"
+                    },
+                    {
+                      "name": "column_59fe3ca9239",
+                      "expression": "SUM(`total_rental`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 0,
+              "viz_spec": {
+                "display_name": "Most Rent Customer",
+                "viz_type": "CHART",
+                "serialized_options": "{\"isAggregationOn\":true,\"series\":{\"error_y\":{\"type\":\"data\",\"visible\":true},\"stacking\":\"stack\"},\"coefficient\":1,\"yAxis\":[{\"type\":\"-\"},{\"opposite\":true,\"type\":\"-\"}],\"columnConfigurationMap\":{\"x\":{\"column\":\"customer_name\",\"id\":\"column_59fe3ca9236\"},\"y\":[{\"column\":\"total_rental\",\"id\":\"column_59fe3ca9239\",\"transform\":\"SUM\"}]},\"alignYAxesAtZero\":true,\"direction\":{\"type\":\"counterclockwise\"},\"swappedAxes\":true,\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"legend\":{\"traceorder\":\"normal\"},\"globalSeriesType\":\"column\",\"version\":2,\"sizemode\":\"diameter\",\"seriesOptions\":{\"column_59fe3ca9239\":{\"type\":\"column\",\"yAxis\":0},\"column_59fe3ca9245\":{\"type\":\"column\",\"yAxis\":0}},\"error_y\":{\"type\":\"data\",\"visible\":true},\"sortX\":false,\"showDataLabels\":true,\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"numberFormat\":\"0,0.[00000]\",\"dateTimeFormat\":\"DD/MM/YYYY HH:mm\",\"sortY\":true,\"valuesOptions\":{},\"xAxis\":{\"labels\":{\"enabled\":true},\"type\":\"-\"}}",
+                "query_name": "e7831248158e44aaa7749092b4dde5de"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "23ce311d",
+            "queries": [
+              {
+                "name": "a9e23c1766eb4b89ada98d5acc331533",
+                "query": {
+                  "datasetName": "b2e0255c",
+                  "fields": [
+                    {
+                      "name": "vehicle_brand",
+                      "expression": "`vehicle_brand`"
+                    },
+                    {
+                      "name": "column_59fe3ca9254",
+                      "expression": "SUM(`total_usage`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 0,
+              "viz_spec": {
+                "display_name": "Most Car Brand Usage",
+                "viz_type": "CHART",
+                "serialized_options": "{\"isAggregationOn\":true,\"series\":{\"error_y\":{\"type\":\"data\",\"visible\":true},\"stacking\":null},\"coefficient\":1,\"yAxis\":[{\"type\":\"-\"},{\"opposite\":true,\"type\":\"-\"}],\"columnConfigurationMap\":{\"x\":{\"column\":\"vehicle_brand\",\"id\":\"column_59fe3ca9252\"},\"y\":[{\"column\":\"total_usage\",\"id\":\"column_59fe3ca9254\",\"transform\":\"SUM\"}]},\"alignYAxesAtZero\":true,\"direction\":{\"type\":\"counterclockwise\"},\"swappedAxes\":false,\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"legend\":{\"traceorder\":\"normal\"},\"globalSeriesType\":\"column\",\"version\":2,\"reverseX\":false,\"sizemode\":\"diameter\",\"seriesOptions\":{\"column_59fe3ca9254\":{\"type\":\"column\",\"yAxis\":0}},\"error_y\":{\"type\":\"data\",\"visible\":true},\"sortX\":false,\"showDataLabels\":true,\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"numberFormat\":\"0,0.[00000]\",\"dateTimeFormat\":\"DD/MM/YYYY HH:mm\",\"sortY\":true,\"valuesOptions\":{},\"xAxis\":{\"labels\":{\"enabled\":true},\"type\":\"-\"}}",
+                "query_name": "a9e23c1766eb4b89ada98d5acc331533"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 7,
+            "width": 7,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "8e5b41ba",
+            "queries": [
+              {
+                "name": "bb638c5c390e47da85a860cea9709508",
+                "query": {
+                  "datasetName": "436fa32c",
+                  "fields": [
+                    {
+                      "name": "location_city",
+                      "expression": "`location_city`"
+                    },
+                    {
+                      "name": "column_59fe3ca9267",
+                      "expression": "SUM(`total_transaction`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 0,
+              "viz_spec": {
+                "display_name": "Popular Pickup Location",
+                "viz_type": "CHART",
+                "serialized_options": "{\"isAggregationOn\":true,\"series\":{\"error_y\":{\"type\":\"data\",\"visible\":true},\"stacking\":\"stack\"},\"coefficient\":1,\"hideXAxis\":false,\"yAxis\":[{\"type\":\"-\"},{\"opposite\":true,\"type\":\"-\"}],\"columnConfigurationMap\":{\"x\":{\"column\":\"location_city\",\"id\":\"column_59fe3ca9271\"},\"y\":[{\"column\":\"total_transaction\",\"id\":\"column_59fe3ca9267\",\"transform\":\"SUM\"}]},\"alignYAxesAtZero\":true,\"direction\":{\"type\":\"counterclockwise\"},\"swappedAxes\":true,\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"legend\":{\"traceorder\":\"normal\"},\"globalSeriesType\":\"column\",\"version\":2,\"reverseX\":false,\"sizemode\":\"diameter\",\"seriesOptions\":{\"column_59fe3ca9267\":{\"name\":\"total_transaction\",\"type\":\"column\",\"yAxis\":0}},\"error_y\":{\"type\":\"data\",\"visible\":true},\"sortX\":false,\"showDataLabels\":true,\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"numberFormat\":\"0,0.[00000]\",\"dateTimeFormat\":\"DD/MM/YYYY HH:mm\",\"sortY\":true,\"valuesOptions\":{},\"xAxis\":{\"labels\":{\"enabled\":true},\"type\":\"-\"}}",
+                "query_name": "bb638c5c390e47da85a860cea9709508"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 5,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "246fbe5f",
+            "queries": [
+              {
+                "name": "b533507e74a94583ad7acc7e8142a855",
+                "query": {
+                  "datasetName": "69f17ca1",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "column_b7941611181",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 0,
+              "viz_spec": {
+                "display_name": "Revenue vs Time",
+                "viz_type": "CHART",
+                "serialized_options": "{\"isAggregationOn\":true,\"series\":{\"error_y\":{\"type\":\"data\",\"visible\":true},\"stacking\":null},\"coefficient\":1,\"yAxis\":[{\"type\":\"-\"},{\"opposite\":true,\"type\":\"-\"}],\"columnConfigurationMap\":{\"x\":{\"column\":\"month\",\"id\":\"column_b7941611180\"},\"y\":[{\"column\":\"total_revenue\",\"id\":\"column_b7941611181\",\"transform\":\"SUM\"}]},\"alignYAxesAtZero\":true,\"direction\":{\"type\":\"counterclockwise\"},\"swappedAxes\":false,\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"legend\":{\"traceorder\":\"normal\"},\"globalSeriesType\":\"line\",\"version\":2,\"sizemode\":\"diameter\",\"seriesOptions\":{\"column_b7941611181\":{\"name\":\"total_revenue\",\"type\":\"line\",\"yAxis\":0}},\"error_y\":{\"type\":\"data\",\"visible\":true},\"sortX\":true,\"showDataLabels\":true,\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"numberFormat\":\"0,0.[00000]\",\"dateTimeFormat\":\"DD/MM/YYYY HH:mm\",\"sortY\":true,\"valuesOptions\":{},\"xAxis\":{\"labels\":{\"enabled\":true},\"type\":\"-\"}}",
+                "query_name": "b533507e74a94583ad7acc7e8142a855"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 7,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
